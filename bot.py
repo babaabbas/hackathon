@@ -1,6 +1,6 @@
 import os
 import asyncio
-
+from ragg import query_answer
 
 
 
@@ -36,6 +36,14 @@ router=Router()
 @dp.message(Command('start'))
 async def handle1r(message: types.Message, command: CommandObject):
     await bot.send_message(chat_id=message.from_user.id,text="Iam Alkimi chatbot, How can i help you?")
+
+
+@dp.message(F.content_type.in_({'text'}))
+async def handler2(message: types.Message):
+    op = query_answer(message.text)
+    await bot.send_message(chat_id=message.from_user.id, text=op)
+
+@dp.message()
 async def main():
     # Start polling for         updates
     await dp.start_polling(bot)
